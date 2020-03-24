@@ -1,0 +1,7 @@
+# Project exclude paths
+/nvwa-apis/nvwa-mobileapi/target/
+/nvwa-apis/nvwa-openapi/target/
+/nvwa-business/target/
+/nvwa-services/nvwa-log-service/target/
+/nvwa-services/nvwa-user-service/target/
+/nvwa-test/target/
