@@ -13,10 +13,10 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,10 +24,15 @@ import java.util.Scanner;
  * @author jijunhui
  * @version 1.0.0
  * @date 2020/3/24 20:47
- * @description 代码生成
+ * @description 代码生成 针对maven三级结构
  */
-@Slf4j
 public class CodeGenerator {
+    // 模块名称
+    private static final String MODULE_NAME = "/nvwa-services/nvwa-user-service";
+    // 模块java路径
+    private static final String MODULE_JAVA_PATH = MODULE_NAME + "/src/main/java";
+    // 模块配置路径
+    private static final String MODULE_RESOURCE_PATH = MODULE_NAME + "/src/main/resources";
     /**
      * <p>
      * 读取控制台内容
@@ -37,7 +42,7 @@ public class CodeGenerator {
         Scanner scanner = new Scanner(System.in);
         StringBuilder help = new StringBuilder();
         help.append("请输入" + tip + "：");
-        log.info(help.toString());
+        System.out.println(help.toString());
         if (scanner.hasNext()) {
             String ipt = scanner.next();
             if (StringUtils.isNotEmpty(ipt)) {
@@ -50,13 +55,14 @@ public class CodeGenerator {
     public static void main(String[] args) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir(projectPath + MODULE_JAVA_PATH);
         gc.setAuthor("jeffrey");
         gc.setOpen(false);
+        gc.setServiceName("Sub%sService");
+        gc.setServiceImplName("Sub%sServiceImpl");
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
@@ -72,7 +78,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名称"));
-        pc.setParent("com.home.jeffrey.user");
+        pc.setParent("cn.home.jeffrey");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -84,7 +90,7 @@ public class CodeGenerator {
         };
 
         // 如果模板引擎是 freemarker
-        String templatePath = "/templates/mapper.xml.ftl";
+        String templatePath = "/template/mapper.xml.ftl";
         // 如果模板引擎是 velocity
 //         String templatePath = "/templates/mapper.xml.vm";
 
@@ -95,7 +101,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return projectPath + MODULE_RESOURCE_PATH + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
         /*
@@ -114,11 +120,12 @@ public class CodeGenerator {
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
 
-        // 配置自定义输出模板
-        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        // templateConfig.setEntity("templates/entity2.java");
-        // templateConfig.setService();
-        // templateConfig.setController();
+//         配置自定义输出模板
+//        指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+         templateConfig.setEntity("template/entity.java");
+         templateConfig.setService("template/service.java");
+         templateConfig.setServiceImpl("template/serviceImpl.java");
+         templateConfig.setController("template/controller.java");
 
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
@@ -136,7 +143,7 @@ public class CodeGenerator {
         strategy.setSuperEntityColumns("id");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix("tb_","log_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
