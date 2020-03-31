@@ -11,5 +11,13 @@
 
     <artifactId>nvwa-test</artifactId>
 
+    <dependencies>
+        <!--阿里 FastJson依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
