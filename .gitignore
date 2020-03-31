@@ -5,3 +5,6 @@
 /nvwa-services/nvwa-log-service/target/
 /nvwa-services/nvwa-user-service/target/
 /nvwa-test/target/
+# Project exclude paths
+/nvwa-commons/nvwa-common/target/
+/nvwa-services/nvwa-user-interface/target/
