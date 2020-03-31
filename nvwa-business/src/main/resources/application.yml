@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: nvwa-business-service
+server:
+  port: 8001
+
+# dubbo 配置
+dubbo:
+  application:
+    name: business-service-consumer
+  scan:
+    base-packages: cn.home.jeffrey.business
+  registry:
+    address: zookeeper://192.168.1.9:2181
+  consumer:
+    check: false
+    retries: 0
+    timeout: 50000

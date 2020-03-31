@@ -20,6 +20,8 @@
     <properties>
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
         <durid.version>1.1.21</durid.version>
+        <dubbo.starter.version>0.2.1.RELEASE</dubbo.starter.version>
+        <dubbo.version>2.7.5</dubbo.version>
         <freemarker.version>2.3.30</freemarker.version>
         <springboot.version>2.2.5.RELEASE</springboot.version>
         <fastjson.version>1.2.66</fastjson.version>
@@ -38,6 +40,20 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- 本项目依赖-->
+            <dependency>
+                <groupId>cn.home.jeffrey</groupId>
+                <artifactId>nvwa-user-interface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.home.jeffrey</groupId>
+                <artifactId>nvwa-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- springboot引入-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -117,6 +133,26 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba</groupId>-->
+<!--                <artifactId>druid-spring-boot-starter</artifactId>-->
+<!--                <version>${dubbo.starter.version}</version>-->
+<!--            </dependency>-->
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

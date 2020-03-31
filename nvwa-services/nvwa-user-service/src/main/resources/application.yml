@@ -1,5 +1,37 @@
 spring:
   application:
     name: user-service
+  datasource:
+    druid:
+      db-type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://localhost:3306/nvwa?serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      max-pool-prepared-statement-per-connection-size: 20
 server:
   port: 8080
+
+# dubbo 配置
+dubbo:
+  application:
+    name: user-service-provider
+  scan:
+    base-packages: cn.home.jeffrey.user
+  protocol:
+    name: dubbo
+    port: 28880
+  registry:
+    address: zookeeper://192.168.1.9:2181
+    timeout: 5000
+    group:

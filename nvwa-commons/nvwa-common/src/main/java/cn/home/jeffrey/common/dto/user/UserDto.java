@@ -1,25 +1,22 @@
-package cn.home.jeffrey.user.entity;
+package cn.home.jeffrey.common.dto.user;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
- * <p>
- * 用户表
- * </p>
- *
- * @author jeffrey
- * @since 2020-03-25
+ * @author jijunhui
+ * @version 1.0.0
+ * @date 2020/3/25 23:14
+ * @description 用户数据传输Dto
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tb_user")
-public class User implements Serializable {
+public class UserDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -62,6 +59,4 @@ public class User implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
-
-
 }
