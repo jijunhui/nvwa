@@ -1,0 +1,20 @@
+urls:
+  zk-url: Jeffrey
+spring:
+  application:
+    name: nvwa-openapi-service
+server:
+  port: 8001
+
+# dubbo 配置
+dubbo:
+  application:
+    name: openapi-service-consumer
+  scan:
+    base-packages: cn.home.jeffrey.api.open
+  registry:
+    address: zookeeper://${urls.zk-url}:2181
+  consumer:
+    check: false
+    retries: 0
+    timeout: 50000

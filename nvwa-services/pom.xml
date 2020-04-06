@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>nvwa-user-service</module>
-        <module>nvwa-log-service</module>
         <module>nvwa-user-interface</module>
     </modules>
 

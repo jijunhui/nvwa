@@ -10,6 +10,7 @@ public enum ErrCodeEnum {
 
     ERR_SYSTEM_SERVICE("999999", "系统服务异常"),
     ERR_SUB_USER_SERVICE("999991", "用户子服务异常"),
+    ERR_BASE_SERVICE("999981", "基础服务异常"),
     /**
      * 参数不完整
      */

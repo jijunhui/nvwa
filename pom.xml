@@ -13,7 +13,7 @@
         <module>nvwa-services</module>
         <module>nvwa-business</module>
         <module>nvwa-commons</module>
-        <module>nvwa-apis</module>
+        <module>nvwa-api</module>
         <module>nvwa-test</module>
     </modules>
 
@@ -27,6 +27,7 @@
         <fastjson.version>1.2.68</fastjson.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <guava.version>28.2-jre</guava.version>
+        <hutool.version>5.2.5</hutool.version>
 
         <!-- 添加后默认以JDK1.8 编译 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,6 +46,12 @@
             <dependency>
                 <groupId>cn.home.jeffrey</groupId>
                 <artifactId>nvwa-user-interface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.home.jeffrey</groupId>
+                <artifactId>nvwa-base-interface</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -123,10 +130,11 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
+
 
             <dependency>
                 <groupId>com.google.guava</groupId>

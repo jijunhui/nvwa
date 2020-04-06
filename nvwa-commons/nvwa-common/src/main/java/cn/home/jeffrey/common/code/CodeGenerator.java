@@ -28,7 +28,7 @@ import java.util.Scanner;
  */
 public class CodeGenerator {
     // 模块名称
-    private static final String MODULE_NAME = "/nvwa-services/nvwa-user-service";
+    private static final String MODULE_NAME = "/nvwa-commons/nvwa-base-service";
     // 模块java路径
     private static final String MODULE_JAVA_PATH = MODULE_NAME + "/src/main/java";
     // 模块配置路径

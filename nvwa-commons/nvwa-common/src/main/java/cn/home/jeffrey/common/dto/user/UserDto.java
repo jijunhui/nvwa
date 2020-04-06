@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
  * @description 用户数据传输Dto
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class UserDto implements Serializable {
 

@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>nvwa-common</module>
+        <module>nvwa-base-service</module>
+        <module>nvwa-base-interface</module>
     </modules>
 
 </project>

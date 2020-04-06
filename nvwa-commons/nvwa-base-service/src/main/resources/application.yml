@@ -6,7 +6,7 @@ urls:
 
 spring:
   application:
-    name: user-service
+    name: base-service
   datasource:
     druid:
       db-type: com.alibaba.druid.pool.DruidDataSource
@@ -26,14 +26,14 @@ spring:
       test-while-idle: true
       max-pool-prepared-statement-per-connection-size: 20
 server:
-  port: 8090
+  port: 8080
 
 # dubbo 配置
 dubbo:
   application:
     name: user-service-provider
   scan:
-    base-packages: cn.home.jeffrey.user
+    base-packages: cn.home.jeffrey.base
   protocol:
     name: dubbo
     port: -1
