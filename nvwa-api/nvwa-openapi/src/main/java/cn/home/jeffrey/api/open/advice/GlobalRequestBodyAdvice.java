@@ -1,5 +1,6 @@
 package cn.home.jeffrey.api.open.advice;
 
+import cn.home.jeffrey.common.dto.base.RequestLogDto;
 import cn.home.jeffrey.common.enums.ErrCodeEnum;
 import cn.home.jeffrey.common.exceptions.ServiceException;
 import cn.hutool.core.collection.CollUtil;
@@ -28,12 +29,7 @@ import java.util.List;
 
 @ControllerAdvice(basePackages = "cn.home.jeffrey.api.open.controller")
 @Slf4j
-public class GlobalRequestBodyAdvice implements RequestBodyAdvice {
-    /**
-     * 最大长度
-     */
-    private static final int LOG_MAX_LENGTH = 500;
-
+public class GlobalRequestBodyAdvice extends BaseAdvice implements RequestBodyAdvice {
     /**
      * return false 则不执行下面的方法。
      *
@@ -52,8 +48,15 @@ public class GlobalRequestBodyAdvice implements RequestBodyAdvice {
         return new HttpInputMessage() {
             @Override
             public InputStream getBody() throws IOException {
-
+                // 创建请求响应结果
+                RequestLogDto requestLogDto = new RequestLogDto();
+                // 加入线程变量
+                localParam.set(requestLogDto);
+                long currentTime = System.currentTimeMillis();
+                requestLogDto.setRequestTime(currentTime);
+                requestLogDto.setRequestId(currentTime + "");
                 log.info("【请求的方法】:{}", methodParameter.getMethod().getName());
+                requestLogDto.setRequestMethod(methodParameter.getMethod().toString());
                 // 从流中获取参数
                 InputStream inputStream = httpInputMessage.getBody();
                 String result = IoUtil.read(inputStream, StandardCharsets.UTF_8);
@@ -61,6 +64,7 @@ public class GlobalRequestBodyAdvice implements RequestBodyAdvice {
                 IoUtil.close(inputStream);
 
                 log.info("【请求参数body】:{}", StrUtil.isBlank(result) || result.length() < LOG_MAX_LENGTH ? result : result.length());
+                requestLogDto.setRequestParam(StrUtil.isBlank(result) || result.length() < LOG_MAX_LENGTH ? result : result.length() +"");
                 HttpHeaders headers = httpInputMessage.getHeaders();
                 if (null == headers) {
                     throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "请求头不能为空");
@@ -73,7 +77,7 @@ public class GlobalRequestBodyAdvice implements RequestBodyAdvice {
                 if (StrUtil.isBlank(appId)) {
                     throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "应用ID不能为空");
                 }
-
+                requestLogDto.setAppid(appId);
                 List<String> dArr = headers.get("dataType");
                 if (CollUtil.isEmpty(dArr)) {
                     throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "数据传输类型不能为空");
@@ -82,7 +86,6 @@ public class GlobalRequestBodyAdvice implements RequestBodyAdvice {
                 if (StrUtil.isBlank(dataType)) {
                     throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "数据传输类型不能为空");
                 }
-
                 log.info("【请求参数head】:{}", StrUtil.builder(appId, StrUtil.UNDERLINE, dataType).toString());
                 log.debug("统一拦截_收到传输参数：{}", result);
                 return IoUtil.toUtf8Stream(result);

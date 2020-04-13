@@ -1,3 +1,8 @@
+
+#通用url配置
+urls:
+  zk-url: Jeffrey
+
 spring:
   application:
     name: nvwa-business-service
@@ -11,7 +16,7 @@ dubbo:
   scan:
     base-packages: cn.home.jeffrey.business
   registry:
-    address: zookeeper://192.168.1.9:2181
+    address: zookeeper://${urls.zk-url}:2181
   consumer:
     check: false
     retries: 0

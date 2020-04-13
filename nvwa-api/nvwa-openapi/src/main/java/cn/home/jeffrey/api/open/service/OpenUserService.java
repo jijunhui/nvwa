@@ -1,5 +1,6 @@
 package cn.home.jeffrey.api.open.service;
 
+import cn.home.jeffrey.api.open.vo.ResponseVo;
 import cn.home.jeffrey.common.dto.user.UserDto;
 
 /**
@@ -15,5 +16,5 @@ public interface OpenUserService {
      * @param userDto
      * @return
      */
-    UserDto register(UserDto userDto);
+    ResponseVo<UserDto> register(UserDto userDto);
 }

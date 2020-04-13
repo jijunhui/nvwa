@@ -1,8 +1,10 @@
 package cn.home.jeffrey.api.open.service.impl;
 
 import cn.home.jeffrey.api.open.service.OpenUserService;
+import cn.home.jeffrey.api.open.vo.ResponseVo;
 import cn.home.jeffrey.common.dto.RpcResultDto;
 import cn.home.jeffrey.common.dto.user.UserDto;
+import cn.home.jeffrey.common.enums.ResultEnum;
 import cn.home.jeffrey.common.validate.BaseParamValidator;
 import cn.home.jeffrey.user.facade.SubUserFacadeService;
 import org.apache.dubbo.config.annotation.Reference;
@@ -21,9 +23,11 @@ public class OpenUserServiceImpl implements OpenUserService {
     private SubUserFacadeService subUserFacadeService;
 
     @Override
-    public UserDto register(UserDto userDto) {
+    public ResponseVo<UserDto> register(UserDto userDto) {
+        ResponseVo<UserDto> result = new ResponseVo<>(ResultEnum.SUCCESS);
         RpcResultDto<UserDto> registerResult = subUserFacadeService.register(userDto);
         BaseParamValidator.validateRpcResult(registerResult);
-        return registerResult.getData();
+        result.setData(registerResult.getData());
+        return result;
     }
 }
