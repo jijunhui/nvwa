@@ -1,8 +1,10 @@
 package cn.home.jeffrey.api.open.advice;
 
+import cn.home.jeffrey.base.facade.BaseFacadeService;
 import cn.home.jeffrey.common.dto.base.RequestLogDto;
-
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * @author:jeffrey(jeffreyji@aliyun.com)
@@ -10,6 +12,7 @@ import java.util.Map;
  * @version:1.0.0
  * @description:抽象advice
  */
+@Slf4j
 public abstract class BaseAdvice {
     /**
      * 最大长度
@@ -18,5 +21,14 @@ public abstract class BaseAdvice {
     /**
      * 请求参数
      */
-    protected static ThreadLocal<RequestLogDto> localParam = new ThreadLocal<>();
+    protected static ThreadLocal<RequestLogDto> threadRequestLog = new ThreadLocal<>();
+
+    @Reference
+    protected BaseFacadeService baseFacadeService;
+
+    @Async
+    protected void saveRequestLog(RequestLogDto requestLogDto) {
+        log.info("线程:{},执行添加请求日志方法", Thread.currentThread().getName());
+        baseFacadeService.addRequestLog(requestLogDto);
+    }
 }

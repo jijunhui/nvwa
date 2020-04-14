@@ -51,12 +51,12 @@ public class GlobalRequestBodyAdvice extends BaseAdvice implements RequestBodyAd
                 // 创建请求响应结果
                 RequestLogDto requestLogDto = new RequestLogDto();
                 // 加入线程变量
-                localParam.set(requestLogDto);
+                threadRequestLog.set(requestLogDto);
                 long currentTime = System.currentTimeMillis();
                 requestLogDto.setRequestTime(currentTime);
                 requestLogDto.setRequestId(currentTime + "");
                 log.info("【请求的方法】:{}", methodParameter.getMethod().getName());
-                requestLogDto.setRequestMethod(methodParameter.getMethod().toString());
+                requestLogDto.setRequestMethod(methodParameter.getMethod().toGenericString());
                 // 从流中获取参数
                 InputStream inputStream = httpInputMessage.getBody();
                 String result = IoUtil.read(inputStream, StandardCharsets.UTF_8);
@@ -77,7 +77,7 @@ public class GlobalRequestBodyAdvice extends BaseAdvice implements RequestBodyAd
                 if (StrUtil.isBlank(appId)) {
                     throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "应用ID不能为空");
                 }
-                requestLogDto.setAppid(appId);
+                requestLogDto.setAppId(appId);
                 List<String> dArr = headers.get("dataType");
                 if (CollUtil.isEmpty(dArr)) {
                     throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "数据传输类型不能为空");

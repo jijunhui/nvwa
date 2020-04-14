@@ -1,6 +1,9 @@
 package cn.home.jeffrey.api.open.advice;
 
+import cn.home.jeffrey.api.open.vo.ResponseVo;
 import cn.home.jeffrey.common.dto.base.RequestLogDto;
+import cn.home.jeffrey.common.enums.ErrCodeEnum;
+import cn.home.jeffrey.common.exceptions.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -8,6 +11,9 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author jijunhui
@@ -31,12 +37,31 @@ public class GlobalResponseBodyAdvice<BaseResponseVo> extends BaseAdvice impleme
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        log.info("【返回结果】:{}", o);
-        RequestLogDto requestLogDto = localParam.get();
-        requestLogDto.setResponseResult(o.toString());
+        RequestLogDto requestLogDto = threadRequestLog.get();
         requestLogDto.setResponseTime(System.currentTimeMillis());
-        log.info("--->>>请求参数与响应结果<----:{}",requestLogDto);
-        localParam.remove();
-        return o;
+        if (o instanceof ResponseVo) {
+            ResponseVo responseVo = (ResponseVo) o;
+            responseVo.setRequestId(requestLogDto.getRequestId());
+            responseVo.setAppId(requestLogDto.getAppId());
+            Object data = responseVo.getData();
+            if (data instanceof Void) {
+                requestLogDto.setResponseResult("");
+            } else if (data instanceof List) {
+                requestLogDto.setResponseResult("size:" + ((List) data).size());
+            } else if (data instanceof Map) {
+                if (((Map) data).size() < 20) {
+                    requestLogDto.setResponseResult(data.toString());
+                } else {
+                    requestLogDto.setResponseResult("size:" + ((Map) data).size());
+                }
+            } else {
+                requestLogDto.setResponseResult(responseVo.getData().toString());
+            }
+            log.info("--->>>请求参数与响应结果<----:{}", requestLogDto);
+            saveRequestLog(requestLogDto);
+            threadRequestLog.remove();
+            return responseVo;
+        }
+        throw new ServiceException(ErrCodeEnum.ERR_SYSTEM_SERVICE, "返回对象不是ResponseVo的格式");
     }
 }

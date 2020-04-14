@@ -28,9 +28,9 @@ import java.time.LocalDateTime;
 public class BaseRequestLogServiceImpl extends ServiceImpl<RequestLogMapper, RequestLog> implements BaseRequestLogService {
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addRequestLog(RequestLogDto requestLogDto) {
-        if (null == requestLogDto || StringUtils.isAnyEmpty(requestLogDto.getAppid(), requestLogDto.getRequestMethod())) {
+        if (null == requestLogDto || StringUtils.isAnyEmpty(requestLogDto.getAppId(), requestLogDto.getRequestMethod())) {
             log.info("添加请求日志_对象或者参数不能为空");
             throw new ServiceException(ErrCodeEnum.PARAM_ISNULL, "添加请求日志，参数不能为空");
         }

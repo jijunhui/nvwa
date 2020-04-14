@@ -23,7 +23,7 @@ public class RequestLogDto implements Serializable {
     /**
      * appId
      */
-    private String appid;
+    private String appId;
 
     /**
      * 请求参数
