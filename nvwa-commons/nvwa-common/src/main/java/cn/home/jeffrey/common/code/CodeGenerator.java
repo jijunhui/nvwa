@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,6 +32,7 @@ public class CodeGenerator {
     private static final String MODULE_JAVA_PATH = MODULE_NAME + "/src/main/java";
     // 模块配置路径
     private static final String MODULE_RESOURCE_PATH = MODULE_NAME + "/src/main/resources";
+
     /**
      * <p>
      * 读取控制台内容
@@ -122,10 +122,10 @@ public class CodeGenerator {
 
 //         配置自定义输出模板
 //        指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-         templateConfig.setEntity("template/entity.java");
-         templateConfig.setService("template/service.java");
-         templateConfig.setServiceImpl("template/serviceImpl.java");
-         templateConfig.setController("template/controller.java");
+        templateConfig.setEntity("template/entity.java");
+        templateConfig.setService("template/service.java");
+        templateConfig.setServiceImpl("template/serviceImpl.java");
+        templateConfig.setController("template/controller.java");
 
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
@@ -143,7 +143,7 @@ public class CodeGenerator {
         strategy.setSuperEntityColumns("id");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix("tb_","log_");
+        strategy.setTablePrefix("tb_", "log_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

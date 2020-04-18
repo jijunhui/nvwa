@@ -3,6 +3,9 @@ urls:
 spring:
   application:
     name: nvwa-openapi-service
+  redis:
+    url: ${urls.zk-url}
+    port: 6379
 server:
   port: 8088
 

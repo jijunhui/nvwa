@@ -2,9 +2,8 @@ package cn.home.jeffrey.api.open.vo;
 
 import cn.home.jeffrey.common.enums.ErrCodeEnum;
 import cn.home.jeffrey.common.enums.ResultEnum;
-import com.google.common.base.Strings;
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -56,7 +55,7 @@ public class ResponseVo<T> implements Serializable {
      */
     public void setCodeAndMessage(ErrCodeEnum errCodeEnum, String desc) {
         this.code = errCodeEnum.getCode();
-        this.message = StringUtils.isEmpty(desc) ? errCodeEnum.getDesc() : desc;
+        this.message = StrUtil.isEmpty(desc) ? errCodeEnum.getDesc() : desc;
     }
 
     /**
@@ -65,7 +64,7 @@ public class ResponseVo<T> implements Serializable {
      * @return
      */
     public boolean isSuccess() {
-        if (!Strings.isNullOrEmpty(code) && code.equals(ResultEnum.SUCCESS.getCode())) {
+        if (StrUtil.isNotBlank(code) && code.equals(ResultEnum.SUCCESS.getCode())) {
             return true;
         }
         return false;

@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2020/4/4 16:44
  * @description openApi启动类
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.home.jeffrey")
 public class OpenApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(OpenApiApplication.class, args);

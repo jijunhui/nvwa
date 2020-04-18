@@ -3,6 +3,8 @@ package cn.home.jeffrey.api.open.controller;
 import cn.home.jeffrey.api.open.service.OpenUserService;
 import cn.home.jeffrey.api.open.vo.ResponseVo;
 import cn.home.jeffrey.common.dto.user.UserDto;
+import cn.home.jeffrey.common.lettuce.StandaloneClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/openapi/user")
+@Slf4j
 public class OpenUserController {
     @Autowired
     private OpenUserService openUserService;
