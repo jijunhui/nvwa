@@ -5,7 +5,7 @@ import cn.home.jeffrey.api.open.vo.ResponseVo;
 import cn.home.jeffrey.common.dto.RpcResultDto;
 import cn.home.jeffrey.common.dto.user.UserDto;
 import cn.home.jeffrey.common.enums.ResultEnum;
-import cn.home.jeffrey.common.lettuce.StandaloneClient;
+import cn.home.jeffrey.common.lettuce.CacheStandaloneClient;
 import cn.home.jeffrey.common.validate.BaseParamValidator;
 import cn.home.jeffrey.user.facade.SubUserFacadeService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class OpenUserServiceImpl implements OpenUserService {
 
     @Override
     public ResponseVo<UserDto> register(UserDto userDto) {
-        log.info("查询缓存信息:{}",StandaloneClient.get("aaaa"));
+        log.info("查询缓存信息:{}", CacheStandaloneClient.get("aaaa"));
         ResponseVo<UserDto> result = new ResponseVo<>(ResultEnum.SUCCESS);
         RpcResultDto<UserDto> registerResult = subUserFacadeService.register(userDto);
         BaseParamValidator.validateRpcResult(registerResult);

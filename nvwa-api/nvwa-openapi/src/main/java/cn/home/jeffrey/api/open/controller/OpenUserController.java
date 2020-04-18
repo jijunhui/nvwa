@@ -3,7 +3,6 @@ package cn.home.jeffrey.api.open.controller;
 import cn.home.jeffrey.api.open.service.OpenUserService;
 import cn.home.jeffrey.api.open.vo.ResponseVo;
 import cn.home.jeffrey.common.dto.user.UserDto;
-import cn.home.jeffrey.common.lettuce.StandaloneClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

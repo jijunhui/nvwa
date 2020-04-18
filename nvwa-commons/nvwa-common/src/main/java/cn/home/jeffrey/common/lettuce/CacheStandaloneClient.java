@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.Duration;
 
 /**
@@ -18,17 +19,17 @@ import java.time.Duration;
  * @description:单击模式客户端
  */
 @Slf4j
-//@Component
-public class StandaloneClient {
+@Component
+public class CacheStandaloneClient {
     @Value("${spring.redis.url}")
-    private static String host;
+    private String host;
     @Value("${spring.redis.port}")
-    private static int port;
+    private int port;
+
     private static RedisCommands<String, String> redisCommands;
 
-    static {
-        String host = "Jeffrey";
-        int port = 6379;
+    @PostConstruct
+    public void init() {
         RedisURI redisURI = RedisURI.builder().withHost(host).withPort(port).withTimeout(Duration.ofSeconds(30)).build();
         RedisClient redisClient = RedisClient.create(redisURI);
         StatefulRedisConnection<String, String> connection = redisClient.connect();
@@ -37,6 +38,7 @@ public class StandaloneClient {
 
     /**
      * 字符串设置
+     *
      * @param k
      * @param v
      * @return
@@ -47,10 +49,11 @@ public class StandaloneClient {
 
     /**
      * 获取String
+     *
      * @param k
      * @return
      */
-    public static String get(String k){
+    public static String get(String k) {
         return redisCommands.get(k);
     }
 
