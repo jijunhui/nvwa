@@ -1,5 +1,5 @@
 urls:
-  zk-url: 192.168.1.12
+  zk-url: Jeffrey
 spring:
   application:
     name: nvwa-openapi-service

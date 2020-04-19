@@ -20,7 +20,7 @@ import java.time.Duration;
  */
 @Slf4j
 @Component
-public class CacheStandaloneClient {
+public class CacheStandaloneClient extends BaseCacheClient{
     @Value("${spring.redis.url}")
     private String host;
     @Value("${spring.redis.port}")
@@ -30,10 +30,12 @@ public class CacheStandaloneClient {
 
     @PostConstruct
     public void init() {
+        log.info("redis client lettuce init start....");
         RedisURI redisURI = RedisURI.builder().withHost(host).withPort(port).withTimeout(Duration.ofSeconds(30)).build();
         RedisClient redisClient = RedisClient.create(redisURI);
         StatefulRedisConnection<String, String> connection = redisClient.connect();
         redisCommands = connection.sync();
+        log.info("redis client lettuce init success! host:{},port:{}",host,port);
     }
 
     /**
@@ -44,7 +46,7 @@ public class CacheStandaloneClient {
      * @return
      */
     public static String set(String k, String v) {
-        return redisCommands.set(k, v);
+        return redisCommands.set(contantPre(k), v);
     }
 
     /**
@@ -54,7 +56,7 @@ public class CacheStandaloneClient {
      * @return
      */
     public static String get(String k) {
-        return redisCommands.get(k);
+        return redisCommands.get(contantPre(k));
     }
 
     public static void main(String[] args) {
